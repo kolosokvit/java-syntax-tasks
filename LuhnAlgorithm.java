@@ -1,16 +1,16 @@
-import java.util.Scanner ;
+import java.util.Scanner;
+import java.util.stream.IntStream;
+
 public class LuhnAlgorithm {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println("Input your card number");
         String cardNumber = in.nextLine();
-        char[] number = cardNumber.toCharArray();
-        int[] yourNumber = new int[16];
-        int l = number.length;
+        IntStream intStream = cardNumber.chars();
+        int[] yourNumber = intStream.toArray();
+        int l = yourNumber.length;
         for (int i = 0; i < l; i++) {
-            char ch = number[i];
-            int n = Character.getNumericValue(ch);
-            yourNumber[i] = n;
+            yourNumber[i] = Character.getNumericValue(yourNumber[i]);
         }
         for (int i = 0; i < l; i += 2) {
             yourNumber[i] = yourNumber[i] * 2;
@@ -18,14 +18,14 @@ public class LuhnAlgorithm {
                 yourNumber[i] = yourNumber[i] - 9;
             }
         }
-        int checkSumm = 0;
-        for (int i = 0; i < l; i++) {
-            checkSumm += yourNumber[i];
+        int checkSum = 0;
+        for (int j : yourNumber) {
+            checkSum += j;
         }
-        if (checkSumm % 10 == 0) {
-            System.out.println("Your card number is valid");
+        if (checkSum % 10 == 0) {
+            System.out.println("Your card number is valid.");
         } else {
-            System.out.println("Your card number is invalid");
+            System.out.println("Your card number is invalid.");
         }
     }
 }
